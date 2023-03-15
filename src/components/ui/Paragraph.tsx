@@ -1,4 +1,4 @@
-import React, { FC, forwardRef, HTMLAttributes } from "react";
+import React, { forwardRef, HTMLAttributes } from "react";
 import { cva, VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +33,6 @@ const Paragraph = forwardRef<HTMLParagraphElement, ParagraphTypes>(
   )
 );
 
-Paragraph.displayName = 'Paragraph'
+Paragraph.displayName = "Paragraph";
 
 export default Paragraph;
