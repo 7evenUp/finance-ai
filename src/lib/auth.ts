@@ -37,15 +37,14 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session: ({ token, session }) => {
-      console.log(
-        "Inside session callback. Token: ",
-        token,
-        ". Session: ",
-        session
-      );
+      console.log("================")
+      console.log("Inside session callback.")
+      console.log("Token: ", token)
+      console.log("Session: ", session)
+      console.log("================")
       if (token) {
         session.user.id = token.id;
-        session.user.name = token.id;
+        session.user.name = token.name;
         session.user.email = token.email;
         session.user.image = token.picture;
       }
@@ -53,7 +52,6 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     jwt: async ({ token, user }) => {
-      console.log("Inside jwt callback. Token: ", token, ". User: ", user);
       const dbUser = await db.user.findFirst({
         where: {
           email: token.email,

@@ -6,6 +6,7 @@ import {
   Laptop,
   Key,
   Copy,
+  Loader2
 } from "lucide-react";
 
 const Icons = {
@@ -16,6 +17,7 @@ const Icons = {
   Laptop,
   Key,
   Copy,
+  Loader2
 };
 
 export default Icons;
