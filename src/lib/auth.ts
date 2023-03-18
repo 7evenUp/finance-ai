@@ -1,68 +1,77 @@
 import { NextAuthOptions } from "next-auth";
-import GithubProvider from 'next-auth/providers/github'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import DiscordProvider from "next-auth/providers/discord";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
 
-const geGithubCredentials = () => {
-  const clientId = process.env.GITHUB_CLIENT_ID
-  const clientSecret = process.env.GITHUB_CLIENT_SECRET
+const getDiscordCredentials = () => {
+  const clientId = process.env.DISCORD_CLIENT_ID;
+  const clientSecret = process.env.DISCORD_CLIENT_SECRET;
 
   if (!clientId || clientId.length === 0) {
-    throw new Error('No Client ID for github provider')
+    throw new Error("No Client ID for github provider");
   }
 
   if (!clientSecret || clientSecret.length === 0) {
-    throw new Error('No Client Secret for github provider')
+    throw new Error("No Client Secret for github provider");
   }
 
   return {
     clientId,
-    clientSecret
-  }
-}
+    clientSecret,
+  };
+};
 
 export const authOptions: NextAuthOptions = {
-  providers: [GithubProvider({
-    clientId: geGithubCredentials().clientId,
-    clientSecret: geGithubCredentials().clientSecret
-  })],
+  providers: [
+    DiscordProvider({
+      clientId: getDiscordCredentials().clientId,
+      clientSecret: getDiscordCredentials().clientSecret,
+    }),
+  ],
   adapter: PrismaAdapter(db),
   session: {
-    strategy: 'jwt'
+    strategy: "jwt",
   },
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   callbacks: {
-    session: ({token, session}) => {
+    session: ({ token, session }) => {
+      console.log(
+        "Inside session callback. Token: ",
+        token,
+        ". Session: ",
+        session
+      );
       if (token) {
-        session.user.id = token.id
-        session.user.name = token.id
-        session.user.email = token.email
-        session.user.image = token.picture
+        session.user.id = token.id;
+        session.user.name = token.id;
+        session.user.email = token.email;
+        session.user.image = token.picture;
       }
 
-      return session
+      return session;
     },
-    jwt: async ({token, user}) => {
+    jwt: async ({ token, user }) => {
+      console.log("Inside jwt callback. Token: ", token, ". User: ", user);
       const dbUser = await db.user.findFirst({
         where: {
-          email: token.email
-        }
-      })
+          email: token.email,
+        },
+      });
 
       if (!dbUser) {
-        token.id = user!.id
-        return token
+        token.id = user!.id;
+        return token;
       }
 
       return {
         id: dbUser.id,
         name: dbUser.name,
         email: dbUser.email,
-        picture: dbUser.image
-      }
+        picture: dbUser.image,
+      };
     },
-    redirect: () => '/dashboard'
-  }
-}
+    redirect: () => "/dashboard",
+  },
+};

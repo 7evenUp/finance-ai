@@ -6,7 +6,7 @@ import SignOutButton from "@/components/SignOutButton";
 import ThemeToggle from "@/components/ThemeToggle";
 import { authOptions } from "@/lib/auth";
 
-const Navbar = async ({}) => {
+const Navbar = async () => {
   const session = await getServerSession(authOptions);
 
   return (
