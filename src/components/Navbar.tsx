@@ -3,10 +3,12 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/Button";
 import SignInButton from "@/components/SignInButton";
 import SignOutButton from "@/components/SignOutButton";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "@/components/ThemeToggle";
+import { authOptions } from "@/lib/auth";
 
 const Navbar = async ({}) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
+
   return (
     <div
       className="backdrop-blur-sm bg-white/75 dark:bg-slate-900

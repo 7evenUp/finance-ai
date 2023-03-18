@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import Button from "@/components/ui/Button";
@@ -33,6 +34,7 @@ const ThemeToggle: FC<ThemeToggleProps> = ({}) => {
           <Icons.Moon className="mr-2 h-4 w-4" />
           <span>Dark</span>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <Icons.Laptop className="mr-2 h-4 w-4" />
           <span>System</span>

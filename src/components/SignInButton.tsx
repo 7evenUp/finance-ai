@@ -10,11 +10,11 @@ interface SignInButtonProps {}
 const SignInButton: FC<SignInButtonProps> = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const signInWithGoogle = async () => {
+  const signInWithGithub = async () => {
     setIsLoading(true);
 
     try {
-      await signIn("google");
+      await signIn("github");
     } catch (error) {
       toast({
         title: "Error signing in",
@@ -25,7 +25,7 @@ const SignInButton: FC<SignInButtonProps> = ({}) => {
   };
 
   return (
-    <Button onClick={signInWithGoogle} isLoading={isLoading}>
+    <Button onClick={signInWithGithub} isLoading={isLoading}>
       Sign in
     </Button>
   );
