@@ -4,8 +4,8 @@ import Paragraph from '@/components/ui/Paragraph'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Finance AI | Documentation',
-  description: 'Documentation of app'
+  title: 'Similarity API | Documentation',
+  description: 'Free & open-source text similarity API',
 }
 
 const Documentation = ({}) => {

@@ -7,9 +7,9 @@ import { getServerSession } from "next-auth/next";
 import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Finance AI | Dashboard",
-  description: "Dashboard for API keys management",
-};
+  title: 'Similarity API | Dashboard',
+  description: 'Free & open-source text similarity API',
+}
 
 const Dashboard = async () => {
   const user = await getServerSession(authOptions);

@@ -18,7 +18,7 @@ const Navbar = async () => {
     >
       <div className="container max-w-7xl mx-auto w-full flex justify-between items-center">
         <Link href="/" className={buttonVariants({ variant: "link" })}>
-          Finance AI 1.0
+          Text Similarity v1.0
         </Link>
 
         <div className="md:hidden">
