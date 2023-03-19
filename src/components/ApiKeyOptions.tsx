@@ -7,9 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
-import Button from "./ui/Button";
-import Icons from "./Icons";
-import { toast } from "./ui/Toast";
+import Button from "@/components/ui/Button";
+import Icons from "@/components/Icons";
+import { toast } from "@/components/ui/Toast";
+import { useRouter } from "next/navigation";
+import { createApiKey } from "@/helpers/create-api-key";
+import { revokeApiKey } from "@/helpers/revoke-api-key";
 
 interface ApiKeyOptionsProps {
   apiKeyId: string;
@@ -19,6 +22,42 @@ interface ApiKeyOptionsProps {
 const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ apiKeyId, apiKeyKey }) => {
   const [isCreatingNew, setIsCreatingNew] = useState(false);
   const [isRevoking, setIsRevoking] = useState(false);
+  const router = useRouter();
+
+  const createNewApiKey = async () => {
+    setIsCreatingNew(true);
+
+    try {
+      await revokeApiKey({ keyId: apiKeyId });
+      await createApiKey();
+      router.refresh();
+    } catch (error) {
+      toast({
+        title: "Error creating API key",
+        message: "Please try again later",
+        type: "error",
+      });
+    } finally {
+      setIsCreatingNew(false);
+    }
+  };
+
+  const revokeCurrentApiKey = async () => {
+    setIsRevoking(true)
+
+    try {
+      await revokeApiKey({ keyId: apiKeyId });
+      router.refresh();
+    } catch (error) {
+      toast({
+        title: "Error revoking API key",
+        message: "Please try again later",
+        type: "error",
+      });
+    } finally {
+      setIsRevoking(false);
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -48,8 +87,8 @@ const ApiKeyOptions: FC<ApiKeyOptionsProps> = ({ apiKeyId, apiKeyKey }) => {
         >
           Copy
         </DropdownMenuItem>
-        <DropdownMenuItem>Create new key</DropdownMenuItem>
-        <DropdownMenuItem>Revoke key</DropdownMenuItem>
+        <DropdownMenuItem onClick={createNewApiKey}>Create new key</DropdownMenuItem>
+        <DropdownMenuItem onClick={revokeCurrentApiKey}>Revoke key</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
