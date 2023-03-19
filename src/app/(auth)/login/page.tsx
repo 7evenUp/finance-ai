@@ -23,7 +23,7 @@ const page: FC = () => {
             </Link>
 
             <LargeHeading>Welcome back!</LargeHeading>
-            <Paragraph>Please sign in using your Github account.</Paragraph>
+            <Paragraph>Please sign in using your Discord account.</Paragraph>
           </div>
           <UserAuthForm />
         </div>
